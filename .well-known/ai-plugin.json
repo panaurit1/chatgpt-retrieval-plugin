@@ -1,19 +1,19 @@
 {
   "schema_version": "v1",
-  "name_for_model": "retrieval",
-  "name_for_human": "Retrieval Plugin",
-  "description_for_model": "Plugin for searching through the user's documents (such as files, emails, and more) to find answers to questions and retrieve relevant information. Use it whenever a user asks something that might be found in their personal information.",
-  "description_for_human": "Search through your documents.",
+  "name_for_model": "PanAuri hydron(carbon) intelligence_db",
+  "name_for_human": "PanAuri hydro(carbon) intelligence",
+  "description_for_model": "Use this tool to get up to date information about the energy transformation with a focus on hydrocarbons, renewable energy, all forms of energy transmission like shipping, electrical grids and pipelines as well as all forms of individual, group and freight transportation in all modes of transportation. Also includes the regulations of energy production, energy transmission and transportation."
+  "description_for_human": "Use this regularly updated information to navigate the energy transition confidently",
   "auth": {
     "type": "user_http",
     "authorization_type": "bearer"
   },
   "api": {
     "type": "openapi",
-    "url": "https://your-app-url.com/.well-known/openapi.yaml",
+    "url": "https://panauri-app-zihrj.ondigitalocean.app/.well-known/openapi.yaml",
     "has_user_authentication": false
   },
-  "logo_url": "https://your-app-url.com/.well-known/logo.png",
-  "contact_email": "hello@contact.com", 
-  "legal_info_url": "http://example.com/legal-info"
+  "logo_url": "https://panauri-app-zihrj.ondigitalocean.app/.well-known/logo.png",
+  "contact_email": "udo.edelmann@panauri.com", 
+  "legal_info_url": "http://panauri.com/legal-info"
 }
