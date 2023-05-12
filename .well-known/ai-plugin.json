@@ -1,6 +1,6 @@
 {
   "schema_version": "v1",
-  "name_for_model": "hydrocarbon intelligence",
+  "name_for_model": "panauri_intelligence_db",
   "name_for_human": "PanAuri intelligence",
   "description_for_model": "Use this tool to get up to date information about the energy transition with a focus on hydrocarbons, renewable energy, all forms of energy transmission like shipping, electrical grids and pipelines as well as all forms of individual, group and freight transportation in all modes of transportation. Also includes the regulations of energy production, energy transmission and transportation.",
   "description_for_human": "PanAuri hydro(carbon) intelligence - navigate the energy transition with confidence",
