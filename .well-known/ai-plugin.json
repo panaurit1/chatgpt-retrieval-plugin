@@ -10,10 +10,10 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://apillm.panauri.com/.well-known/openapi.yaml",
+    "url": "https://chatgpt-retrieval-plugin-7g7ckkxucq-uk.a.run.app/.well-known/openapi.yaml",
     "has_user_authentication": false
   },
-  "logo_url": "https://apillm.panauri.com/.well-known/logo.png",
+  "logo_url": "https://chatgpt-retrieval-plugin-7g7ckkxucq-uk.a.run.app/.well-known/logo.png",
   "contact_email": "udo.edelmann@panauri.com", 
   "legal_info_url": "http://panauri.com/legal-info"
 }
