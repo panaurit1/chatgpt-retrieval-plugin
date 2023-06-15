@@ -16,7 +16,9 @@ def extract_metadata_from_document(text: str) -> Dict[str, str]:
             - source: string, one of {sources_string}
             - url: string or don't specify
             - created_at: string or don't specify
-            - author: string or don't specify
+            - author: string or don't specify like IEA, EIA, NREL, ERCOT or EQT
+            - region: 2 character region code from ISO-3166-1 like US-CA
+            - energy_object: like O&G, LNG, H2, ammonia, methanol, electricity 
 
             Respond with a JSON containing the extracted metadata in key value pairs. If you don't find a metadata field, don't specify it.
             """,

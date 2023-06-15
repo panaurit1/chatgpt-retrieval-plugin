@@ -55,6 +55,12 @@ components:
         document_id:
           title: Document Id
           type: string
+        region:
+          title: Region
+          type: string
+        energy_object:
+          title: Energy Object
+          type: string
     DocumentChunkWithScore:
       title: DocumentChunkWithScore
       required:
@@ -99,6 +105,12 @@ components:
           type: string
         end_date:
           title: End Date
+          type: string
+        region:
+          title: Region
+          type: string
+        energy_object:
+          title: Energy Object
           type: string
     HTTPValidationError:
       title: HTTPValidationError
