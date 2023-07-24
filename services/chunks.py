@@ -155,7 +155,7 @@ def create_document_chunks(
 
 
 def get_document_chunks(
-    documents: List[Document], chunk_token_size: Optional[int]
+    documents: List[Document], chunk_token_size: Optional[int], chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str]
 ) -> Dict[str, List[DocumentChunk]]:
     """
     Convert a list of documents into a dictionary from document id to list of document chunks.
@@ -176,7 +176,7 @@ def get_document_chunks(
 
     # Loop over each document and create chunks
     for doc in documents:
-        doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size)
+        doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size, chunk_token_overlap_size, chunk_token_method)
 
         # Append the chunks for this document to the list of all chunks
         all_chunks.extend(doc_chunks)
