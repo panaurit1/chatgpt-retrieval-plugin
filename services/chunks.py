@@ -46,8 +46,8 @@ def get_text_chunks(text: str, chunk_token_size: Optional[int]
 
     # Use the provided chunk token size or the default one
     chunk_size = chunk_token_size or CHUNK_SIZE
-    chunk_overlap_size = chunk_token_overlap_size or CHUNK_OVERLAP
-    chunk_method = chunk_token_method or CHUNK_METHOD
+    chunk_overlap_size = CHUNK_OVERLAP
+    chunk_method = CHUNK_METHOD
 
     # Initialize a counter for the number of chunks
     num_chunks = 0
