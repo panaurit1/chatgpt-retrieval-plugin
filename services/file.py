@@ -9,12 +9,11 @@ import csv
 import pptx
 from loguru import logger
 
-from models.models import Document, DocumentMetadata, ChunkingMetadata
+from models.models import Document, DocumentMetadata
 
 
 async def get_document_from_file(
-    file: UploadFile, metadata: DocumentMetadata, chunkingdata: ChunkingMetadata
-) -> Document:
+    file: UploadFile, metadata: DocumentMetadata) -> Document:
     extracted_text = await extract_text_from_form_file(file)
 
     doc = Document(text=extracted_text, metadata=metadata)
