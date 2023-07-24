@@ -79,7 +79,7 @@ def extract_text_from_file(file: BufferedReader, mimetype: str) -> str:
                     for paragraph in shape.text_frame.paragraphs:
                         for run in paragraph.runs:
                             extracted_text += run.text + " "
-                    extracted_text += "\n"ChunkingMetadata
+                    extracted_text += "\n"
     else:
         # Unsupported file type
         raise ValueError("Unsupported file type: {}".format(mimetype))
