@@ -104,7 +104,7 @@ def get_text_chunks(text: str, chunk_token_size: Optional[int],
 
 
 def create_document_chunks(
-    doc: Document, chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str]
+    doc: Document, chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str],
     chunk_token_size: Optional[int]
 ) -> Tuple[List[DocumentChunk], str]:
     """
