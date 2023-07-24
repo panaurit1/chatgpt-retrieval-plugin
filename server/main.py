@@ -72,10 +72,8 @@ async def upsert_file(
 
     document = await get_document_from_file(file, metadata_obj)
 
-    print(chunking_obj)
-
     try:
-        ids = await datastore.upsert([document])
+        ids = await datastore.upsert([document], chunk_token_size=chunking_obj.pa_token_length)
         return UpsertResponse(ids=ids)
     except Exception as e:
         logger.error(e)

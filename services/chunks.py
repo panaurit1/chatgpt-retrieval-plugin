@@ -13,7 +13,7 @@ tokenizer = tiktoken.get_encoding(
 )  # The encoding scheme to use for tokenization
 
 # Constants
-CHUNK_SIZE = 512  # The target size of each text chunk in tokens
+CHUNK_SIZE = 200  # The target size of each text chunk in tokens
 MIN_CHUNK_SIZE_CHARS = 350  # The minimum size of each text chunk in characters
 MIN_CHUNK_LENGTH_TO_EMBED = 5  # Discard chunks shorter than this
 EMBEDDINGS_BATCH_SIZE = int(os.environ.get("OPENAI_EMBEDDING_BATCH_SIZE", 128))  # The number of embeddings to request at a time
@@ -22,8 +22,7 @@ CHUNK_METHOD = "simple" # tbd when implementing multiple chunking methods
 CHUNK_OVERLAP = 10 #tbd when implementing chunk overlap
 
 
-def get_text_chunks(text: str, chunk_token_size: Optional[int],
-                    chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str]
+def get_text_chunks(text: str, chunk_token_size: Optional[int]
                     ) -> List[str]:
     """
     Split a text into chunks of ~CHUNK_SIZE tokens, based on punctuation and newline boundaries.
@@ -104,8 +103,7 @@ def get_text_chunks(text: str, chunk_token_size: Optional[int],
 
 
 def create_document_chunks(
-    doc: Document, chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str],
-    chunk_token_size: Optional[int]
+    doc: Document, chunk_token_size: Optional[int]
 ) -> Tuple[List[DocumentChunk], str]:
     """
     Create a list of document chunks from a document object and return the document id.
@@ -126,7 +124,7 @@ def create_document_chunks(
     doc_id = doc.id or str(uuid.uuid4())
 
     # Split the document text into chunks
-    text_chunks = get_text_chunks(doc.text, chunk_token_size, chunk_token_overlap_size, chunk_token_method)
+    text_chunks = get_text_chunks(doc.text, chunk_token_size)
 
     metadata = (
         DocumentChunkMetadata(**doc.metadata.__dict__)
@@ -155,7 +153,7 @@ def create_document_chunks(
 
 
 def get_document_chunks(
-    documents: List[Document], chunk_token_size: Optional[int], chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str]
+    documents: List[Document], chunk_token_size: Optional[int]
 ) -> Dict[str, List[DocumentChunk]]:
     """
     Convert a list of documents into a dictionary from document id to list of document chunks.
@@ -176,7 +174,7 @@ def get_document_chunks(
 
     # Loop over each document and create chunks
     for doc in documents:
-        doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size, chunk_token_overlap_size, chunk_token_method)
+        doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size)
 
         # Append the chunks for this document to the list of all chunks
         all_chunks.extend(doc_chunks)

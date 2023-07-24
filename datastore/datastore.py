@@ -17,8 +17,7 @@ from models.models import ChunkingMetadata
 
 class DataStore(ABC):
     async def upsert(
-        self, documents: List[Document], chunk_token_size: Optional[int] = None,
-        chunk_overlap_size: Optional[int] = None, chunk_method: Optional[str] = None
+        self, documents: List[Document], chunk_token_size: Optional[int] = None
     ) -> List[str]:
         """
         Takes in a list of documents and inserts them into the database.
@@ -39,7 +38,7 @@ class DataStore(ABC):
             ]
         )
 
-        chunks = get_document_chunks(documents, chunk_token_size, chunk_overlap_size, chunk_method)
+        chunks = get_document_chunks(documents, chunk_token_size)
 
         return await self._upsert(chunks)
 
