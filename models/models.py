@@ -9,6 +9,12 @@ class Source(str, Enum):
     chat = "chat"
 
 
+class ChunkingMetadata(BaseModel):
+    pa_chunk_method: Optional(str) = None
+    pa_token_length: Optional(int) = None
+    pa_token_overlap: Optional(int) = None
+
+
 class DocumentMetadata(BaseModel):
     source: Optional[Source] = None
     source_id: Optional[str] = None

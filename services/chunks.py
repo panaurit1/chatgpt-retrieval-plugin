@@ -18,9 +18,13 @@ MIN_CHUNK_SIZE_CHARS = 350  # The minimum size of each text chunk in characters
 MIN_CHUNK_LENGTH_TO_EMBED = 5  # Discard chunks shorter than this
 EMBEDDINGS_BATCH_SIZE = int(os.environ.get("OPENAI_EMBEDDING_BATCH_SIZE", 128))  # The number of embeddings to request at a time
 MAX_NUM_CHUNKS = 10000  # The maximum number of chunks to generate from a text
+CHUNK_METHOD = "simple" # tbd when implementing multiple chunking methods
+CHUNK_OVERLAP = 10 #tbd when implementing chunk overlap
 
 
-def get_text_chunks(text: str, chunk_token_size: Optional[int]) -> List[str]:
+def get_text_chunks(text: str, chunk_token_size: Optional[int],
+                    chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str]
+                    ) -> List[str]:
     """
     Split a text into chunks of ~CHUNK_SIZE tokens, based on punctuation and newline boundaries.
 
@@ -43,6 +47,8 @@ def get_text_chunks(text: str, chunk_token_size: Optional[int]) -> List[str]:
 
     # Use the provided chunk token size or the default one
     chunk_size = chunk_token_size or CHUNK_SIZE
+    chunk_overlap_size = chunk_token_overlap_size or CHUNK_OVERLAP
+    chunk_method = chunk_token_method or CHUNK_METHOD
 
     # Initialize a counter for the number of chunks
     num_chunks = 0

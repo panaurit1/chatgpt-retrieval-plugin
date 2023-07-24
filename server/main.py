@@ -17,7 +17,7 @@ from models.api import (
 from datastore.factory import get_datastore
 from services.file import get_document_from_file
 
-from models.models import DocumentMetadata, Source
+from models.models import DocumentMetadata, Source, ChunkingMetadata
 
 bearer_scheme = HTTPBearer()
 BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
@@ -53,6 +53,15 @@ async def upsert_file(
     metadata: Optional[str] = Form(None),
 ):
     try:
+        chunking_obj = (ChunkingMetadata
+            if metadata
+            else ChunkingMetadata(source=Source.file)
+        )
+    except:
+        chunking_obj = ChunkingMetadata(source=Source.file)
+
+
+    try:
         metadata_obj = (
             DocumentMetadata.parse_raw(metadata)
             if metadata
@@ -61,7 +70,7 @@ async def upsert_file(
     except:
         metadata_obj = DocumentMetadata(source=Source.file)
 
-    document = await get_document_from_file(file, metadata_obj)
+    document = await get_document_from_file(file, metadata_obj, chunking_obj)
 
     try:
         ids = await datastore.upsert([document])

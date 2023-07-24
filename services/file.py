@@ -9,11 +9,11 @@ import csv
 import pptx
 from loguru import logger
 
-from models.models import Document, DocumentMetadata
+from models.models import Document, DocumentMetadata, ChunkingMetadata
 
 
 async def get_document_from_file(
-    file: UploadFile, metadata: DocumentMetadata
+    file: UploadFile, metadata: DocumentMetadata, chunkingdata: ChunkingMetadata
 ) -> Document:
     extracted_text = await extract_text_from_form_file(file)
 
@@ -79,7 +79,7 @@ def extract_text_from_file(file: BufferedReader, mimetype: str) -> str:
                     for paragraph in shape.text_frame.paragraphs:
                         for run in paragraph.runs:
                             extracted_text += run.text + " "
-                    extracted_text += "\n"
+                    extracted_text += "\n"ChunkingMetadata
     else:
         # Unsupported file type
         raise ValueError("Unsupported file type: {}".format(mimetype))
