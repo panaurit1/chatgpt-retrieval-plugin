@@ -104,7 +104,8 @@ def get_text_chunks(text: str, chunk_token_size: Optional[int],
 
 
 def create_document_chunks(
-    doc: Document, chunk_token_size: Optional[int]
+    doc: Document, chunk_token_overlap_size: Optional[int], chunk_token_method: Optional[str]
+    chunk_token_size: Optional[int]
 ) -> Tuple[List[DocumentChunk], str]:
     """
     Create a list of document chunks from a document object and return the document id.
@@ -125,7 +126,7 @@ def create_document_chunks(
     doc_id = doc.id or str(uuid.uuid4())
 
     # Split the document text into chunks
-    text_chunks = get_text_chunks(doc.text, chunk_token_size)
+    text_chunks = get_text_chunks(doc.text, chunk_token_size, chunk_token_overlap_size, chunk_token_method)
 
     metadata = (
         DocumentChunkMetadata(**doc.metadata.__dict__)
