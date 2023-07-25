@@ -12,8 +12,6 @@ from models.models import (
 )
 from services.chunks import get_document_chunks
 from services.openai import get_embeddings
-from models.models import ChunkingMetadata
-
 
 class DataStore(ABC):
     async def upsert(
