@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 from enum import Enum
 
@@ -10,8 +10,8 @@ class Source(str, Enum):
 
 
 class ChunkingMetadata(BaseModel):
-    pa_chunk_method: Optional[str] = None
-    pa_token_length: Optional[int] = None
+    pa_chunk_method: str = Field(default_factory='default')
+    pa_token_length: int = Field(default_factory=512)
     pa_token_overlap: Optional[int] = None
 
 
@@ -44,6 +44,7 @@ class Document(BaseModel):
     id: Optional[str] = None
     text: str
     metadata: Optional[DocumentMetadata] = None
+    chunkingmetadata: Optional[ChunkingMetadata] = None
 
 
 class DocumentWithChunks(Document):

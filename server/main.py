@@ -55,10 +55,10 @@ async def upsert_file(
     try:
         chunking_obj = (ChunkingMetadata.parse_raw(metadata)
             if metadata
-            else ChunkingMetadata(source=Source.file)
+            else ChunkingMetadata()
         )
     except:
-        chunking_obj = ChunkingMetadata(source=Source.file)
+        chunking_obj = ChunkingMetadata()
 
 
     try:
@@ -70,10 +70,10 @@ async def upsert_file(
     except:
         metadata_obj = DocumentMetadata(source=Source.file)
 
-    document = await get_document_from_file(file, metadata_obj)
+    document = await get_document_from_file(file, metadata_obj, chunking_obj)
 
     try:
-        ids = await datastore.upsert([document], chunk_token_size=chunking_obj.pa_token_length)
+        ids = await datastore.upsert([document], chunk_token_size=document.chunkingmetadata.pa_token_length)
         return UpsertResponse(ids=ids)
     except Exception as e:
         logger.error(e)

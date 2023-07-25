@@ -123,7 +123,7 @@ def create_document_chunks(
     # Generate a document id if not provided
     doc_id = doc.id or str(uuid.uuid4())
 
-    # Split the document text into chunks
+    # Split the document text into chunks 
     text_chunks = get_text_chunks(doc.text, chunk_token_size)
 
     metadata = (
@@ -174,8 +174,9 @@ def get_document_chunks(
 
     # Loop over each document and create chunks
     for doc in documents:
-        doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size)
-
+        if doc.chunkingmetadata.pa_chunk_method == 'default':
+            doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size)
+        
         # Append the chunks for this document to the list of all chunks
         all_chunks.extend(doc_chunks)
 
