@@ -60,6 +60,7 @@ async def upsert_file(
     except:
         chunking_obj = ChunkingMetadata(pa_chunk_method='default', pa_token_length=512)
 
+    print(chunking_obj)
 
     try:
         metadata_obj = (
@@ -71,8 +72,6 @@ async def upsert_file(
         metadata_obj = DocumentMetadata(source=Source.file)
 
     document = await get_document_from_file(file, metadata_obj, chunking_obj)
-
-    print(document.chunkingmetadata)
 
     try:
         ids = await datastore.upsert([document], chunk_token_size=document.chunkingmetadata.pa_token_length)
