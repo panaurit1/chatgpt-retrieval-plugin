@@ -59,7 +59,7 @@ async def upsert_file(
             else ChunkingMetadata.parse_obj(**default_chunking_dict)
         )
     except:
-        chunking_obj = ChunkingMetadata.parse_obj({**default_chunking_dict)
+        chunking_obj = ChunkingMetadata.parse_obj(**default_chunking_dict)
     
     print(chunking_obj)
     
