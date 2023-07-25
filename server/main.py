@@ -72,6 +72,8 @@ async def upsert_file(
 
     document = await get_document_from_file(file, metadata_obj, chunking_obj)
 
+    print(document.chunkingmetadata)
+
     try:
         ids = await datastore.upsert([document], chunk_token_size=document.chunkingmetadata.pa_token_length)
         return UpsertResponse(ids=ids)
