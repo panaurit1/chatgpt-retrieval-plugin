@@ -11,7 +11,7 @@ class Source(str, Enum):
 
 class ChunkingMetadata(BaseModel):
     pa_chunk_method: Optional[str] = None
-    pa_token_length: Optional[int] = None)
+    pa_token_length: Optional[int] = None
     pa_token_overlap: Optional[int] = None
 
 
