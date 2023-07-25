@@ -10,8 +10,8 @@ class Source(str, Enum):
 
 
 class ChunkingMetadata(BaseModel):
-    pa_chunk_method: Optional[str] = Field(default_factory='default')
-    pa_token_length: Optional[int] = Field(default_factory=512)
+    pa_chunk_method: Optional[str] = None
+    pa_token_length: Optional[int] = None)
     pa_token_overlap: Optional[int] = None
 
 
