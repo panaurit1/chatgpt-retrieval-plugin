@@ -56,10 +56,10 @@ async def upsert_file(
     try:
         chunking_obj = (ChunkingMetadata.parse_raw(metadata)
             if metadata
-            else ChunkingMetadata.parse_obj(**default_chunking_dict)
+            else ChunkingMetadata(pa_chunk_method='default', pa_token_length=512)
         )
     except:
-        chunking_obj = ChunkingMetadata.parse_obj(**default_chunking_dict)
+        chunking_obj = ChunkingMetadata(pa_chunk_method='default', pa_token_length=512)
     
     print(chunking_obj)
     
