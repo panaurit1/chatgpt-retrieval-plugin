@@ -7,7 +7,7 @@ import tiktoken
 
 from services.openai import get_embeddings
 
-from langchain.text_splitter import MarkdownTextSplitter
+from langchain.text_splitter import MarkdownHeaderTextSplitter
 
 # Global variables
 tokenizer = tiktoken.get_encoding(
@@ -236,8 +236,8 @@ def create_document_md_chunks(
     doc_id = doc.id or str(uuid.uuid4())
 
     # Split the document text into chunks using the langchain method
-    markdown_splitter = MarkdownTextSplitter(chunk_size=chunk_token_size, chunk_overlap=0)
-    text_chunks = markdown_splitter.create_documents([doc.text])
+    markdown_splitter = MarkdownHeaderTextSplitter(chunk_size=chunk_token_size, chunk_overlap=0)
+    text_chunks = markdown_splitter.create_documents(doc.text)
     
 
     metadata = (
