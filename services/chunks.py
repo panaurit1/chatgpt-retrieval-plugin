@@ -137,7 +137,7 @@ def create_document_chunks(
     elif doc.chunkingmetadata.pa_chunk_method == 'latex':
         # Split the document text into chunks using the langchain method Latex
         latex_splitter = LatexTextSplitter(chunk_size=chunk_token_size, chunk_overlap=doc.chunkingmetadata.pa_token_overlap)
-        text_chunks = markdown_splitter.split_text(doc.text)
+        text_chunks = latex_splitter.split_text(doc.text)
 
     metadata = (
         DocumentChunkMetadata(**doc.metadata.__dict__)
