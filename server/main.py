@@ -1,4 +1,5 @@
 import os
+import json
 from typing import Optional
 import uvicorn
 from fastapi import FastAPI, File, Form, HTTPException, Depends, Body, UploadFile
@@ -61,7 +62,7 @@ async def upsert_file(
     except:
         chunking_obj = ChunkingMetadata(pa_chunk_method='default', pa_token_length=512)
 
-    logger.info("Chunking object: ", str(chunking_obj))
+    logger.info("Chunking object: ", json.loads(chunking_obj().json())
     
     try:
         metadata_obj = (
