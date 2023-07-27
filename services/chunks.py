@@ -7,7 +7,7 @@ import tiktoken
 
 from services.openai import get_embeddings
 
-from langchain.text_splitter import MarkdownTextSplitter
+from langchain.text_splitter import MarkdownTextSplitter, LatexTextSplitter
 
 # Global variables
 tokenizer = tiktoken.get_encoding(
@@ -130,8 +130,13 @@ def create_document_chunks(
         text_chunks = get_text_chunks(doc.text, chunk_token_size)
 
     elif doc.chunkingmetadata.pa_chunk_method == 'txt_md':
-        # Split the document text into chunks using the langchain method
+        # Split the document text into chunks using the langchain method MDTextSplitter
         markdown_splitter = MarkdownTextSplitter(chunk_size=chunk_token_size, chunk_overlap=0)
+        text_chunks = markdown_splitter.split_text(doc.text)
+
+    elif doc.chunkingmetadata.pa_chunk_method == 'latex':
+        # Split the document text into chunks using the langchain method Latex
+        latex_splitter = LatexTextSplitter(chunk_size=chunk_token_size, chunk_overlap=doc.chunkingmetadata.pa_token_overlap)
         text_chunks = markdown_splitter.split_text(doc.text)
 
     metadata = (
