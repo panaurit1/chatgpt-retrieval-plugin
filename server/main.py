@@ -62,7 +62,7 @@ async def upsert_file(
     except:
         chunking_obj = ChunkingMetadata(pa_chunk_method='default', pa_token_length=512)
 
-    logger.info("Chunking object: ", json.loads(chunking_obj().json())
+    logger.info("Chunking object: ", json.loads(chunking_obj().json()))
     
     try:
         metadata_obj = (
