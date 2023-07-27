@@ -7,7 +7,7 @@ import tiktoken
 
 from services.openai import get_embeddings
 
-from langchain.text_splitter import MarkdownHeaderTextSplitter
+from langchain.text_splitter import MarkdownTextSplitter
 
 # Global variables
 tokenizer = tiktoken.get_encoding(
@@ -126,7 +126,13 @@ def create_document_chunks(
     doc_id = doc.id or str(uuid.uuid4())
 
     # Split the document text into chunks 
-    text_chunks = get_text_chunks(doc.text, chunk_token_size)
+    if doc.chunkingmetadata.pa_chunk_method == 'default':
+        text_chunks = get_text_chunks(doc.text, chunk_token_size)
+
+    elif doc.chunkingmetadata.pa_chunk_method == 'txt_md':
+        # Split the document text into chunks using the langchain method
+        markdown_splitter = MarkdownTextSplitter(chunk_size=chunk_token_size, chunk_overlap=0)
+        text_chunks = markdown_splitter.split_text(doc.text)
 
     metadata = (
         DocumentChunkMetadata(**doc.metadata.__dict__)
@@ -176,12 +182,9 @@ def get_document_chunks(
 
     # Loop over each document and create chunks
     for doc in documents:
-        if doc.chunkingmetadata.pa_chunk_method == 'default':
-            doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size)
-
-        elif doc.chunkingmetadata.pa_chunk_method == 'txt_md':
-            doc_chunks, doc_id = create_document_md_chunks(doc, chunk_token_size)
         
+        doc_chunks, doc_id = create_document_chunks(doc, chunk_token_size)
+       
         # Append the chunks for this document to the list of all chunks
         all_chunks.extend(doc_chunks)
 
@@ -213,54 +216,3 @@ def get_document_chunks(
 
     return chunks
 
-
-def create_document_md_chunks(
-    doc: Document, chunk_token_size: Optional[int]
-) -> Tuple[List[DocumentChunk], str]:
-    """
-    Create a list of document chunks from a document object using the langchain md specialized method.
-
-    Args:
-        doc: The document object to create chunks from. It should have a text attribute and optionally an id and a metadata attribute.
-        chunk_token_size: The target size of each chunk in tokens, or None to use the default CHUNK_SIZE.
-
-    Returns:
-        A tuple of (doc_chunks, doc_id), where doc_chunks is a list of document chunks, each of which is a DocumentChunk object with an id, a document_id, a text, and a metadata attribute,
-        and doc_id is the id of the document object, generated if not provided. The id of each chunk is generated from the document id and a sequential number, and the metadata is copied from the document object.
-    """
-    # Check if the document text is empty or whitespace
-    if not doc.text or doc.text.isspace():
-        return [], doc.id or str(uuid.uuid4())
-
-    # Generate a document id if not provided
-    doc_id = doc.id or str(uuid.uuid4())
-
-    # Split the document text into chunks using the langchain method
-    markdown_splitter = MarkdownHeaderTextSplitter(chunk_size=chunk_token_size, chunk_overlap=0)
-    text_chunks = markdown_splitter.create_documents(doc.text)
-    
-
-    metadata = (
-        DocumentChunkMetadata(**doc.metadata.__dict__)
-        if doc.metadata is not None
-        else DocumentChunkMetadata()
-    )
-
-    metadata.document_id = doc_id
-
-    # Initialize an empty list of chunks for this document
-    doc_chunks = []
-
-    # Assign each chunk a sequential number and create a DocumentChunk object
-    for i, text_chunk in enumerate(text_chunks):
-        chunk_id = f"{doc_id}_{i}"
-        doc_chunk = DocumentChunk(
-            id=chunk_id,
-            text=text_chunk,
-            metadata=metadata,
-        )
-        # Append the chunk object to the list of chunks for this document
-        doc_chunks.append(doc_chunk)
-
-    # Return the list of chunks and the document id
-    return doc_chunks, doc_id
