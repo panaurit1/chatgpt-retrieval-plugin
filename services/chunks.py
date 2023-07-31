@@ -139,6 +139,9 @@ def create_document_chunks(
         latex_splitter = LatexTextSplitter(chunk_size=chunk_token_size, chunk_overlap=doc.chunkingmetadata.pa_token_overlap)
         text_chunks = latex_splitter.split_text(doc.text)
 
+    else:
+        text_chunks = get_text_chunks(doc.text, chunk_token_size)
+
     metadata = (
         DocumentChunkMetadata(**doc.metadata.__dict__)
         if doc.metadata is not None
