@@ -7,6 +7,7 @@ class Source(str, Enum):
     email = "email"
     file = "file"
     chat = "chat"
+    transcript = "transcript"
 
 
 class ChunkingMetadata(BaseModel):
